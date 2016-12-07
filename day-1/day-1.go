@@ -7,23 +7,38 @@ import (
 )
 
 func main() {
+	locations := make([]location, 0)
 	l := location{0, 0, 0}
 	instructions := getInstructions(`R3, L5, R2, L1, L2, R5, L2, R2, L2, L2, L1,
 	R2, L2, R4, R4, R1, L2, L3, R3, L1, R2, L2, L4, R4, R5, L3, R3, L3, L3, R4,
 	R5, L3, R3, L5, L1, L2, R2, L1, R3, R1, L1, R187, L1, R2, R47, L5, L1, L2,
 	R4, R3, L3, R3, R4, R1, R3, L1, L4, L1, R2, L1, R4, R5, L1, R77, L5, L4, R3,
-	L2, R4, R5, R5, L2, L2, R2, R5, L2, R194, R5, L2, R4, L5, L4, L2, R5, L3, L2,
-	L5, R5, R2, L3, R3, R1, L4, R2, L1, R5, L1, R5, L1, L1, R3, L1, R5, R2, R5,
-	R5, L4, L5, L5, L5, R3, L2, L5, L4, R3, R1, R1, R4, L2, L4, R5, R5, R4, L2,
-	L2, R5, R5, L5, L2, R4, R4, L4, R1, L3, R1, L1, L1, L1, L4, R5, R4, L4, L4,
-	R5, R3, L2, L2, R3, R1, R4, L3, R1, L4, R3, L3, L2, R2, R2, R2, L1, L4, R3,
-	R2, R2, L3, R2, L3, L2, R4, L2, R3,
-	L4, R5, R4, R1, R5, R3`)
+	L2, R4, R5, R5, L2, L2, R2, R5, L2, R194, R5, L2, R4, L5, L4, L2, R5, L3,
+	L2, L5, R5, R2, L3, R3, R1, L4, R2, L1, R5, L1, R5, L1, L1, R3, L1, R5, R2,
+	R5, R5, L4, L5, L5, L5, R3, L2, L5, L4, R3, R1, R1, R4, L2, L4, R5, R5, R4,
+	L2, L2, R5, R5, L5, L2, R4, R4, L4, R1, L3, R1, L1, L1, L1, L4, R5, R4, L4,
+	L4, R5, R3, L2, L2, R3, R1, R4, L3, R1, L4, R3, L3, L2, R2, R2, R2, L1, L4,
+	R3, R2, R2, L3, R2, L3, L2, R4, L2, R3, L4, R5, R4, R1, R5, R3`)
 
-	for _, i := range instructions {
-		l.doInstruction(i)
+	for i, instruct := range instructions {
+		l.doInstruction(instruct)
+		pos := contains(locations, l)
+		if pos != -1 {
+			fmt.Printf("It's here too at %+v %v\n", l, i)
+		}
+		locations = append(locations, l)
 	}
 	fmt.Printf("%+v\n", l)
+}
+
+func contains(locations []location, this location) int {
+	for i, l := range locations {
+		if l.x == this.x && l.y == this.y {
+			fmt.Printf("It's here at %+v %v\n", l, i)
+			return i
+		}
+	}
+	return -1
 }
 
 func getInstructions(s string) []instruction {
@@ -34,7 +49,7 @@ func getInstructions(s string) []instruction {
 		}
 		return false
 	})
-	instructions := make([]instruction, 10)
+	instructions := make([]instruction, 0)
 	for _, part := range parts {
 		instructions = append(instructions, instruction{
 			getIsLeft(part[0]),

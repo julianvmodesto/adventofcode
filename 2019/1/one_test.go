@@ -26,14 +26,14 @@ func TestGetModuleFuel(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		fuel := getModuleFuel(test.mass)
+		fuel := GetModuleFuel(test.mass)
 		if fuel != test.fuel {
 			t.Errorf("test %d failed: expected %d, but got %d", i, test.fuel, fuel)
 		}
 	}
 }
 
-func TestgetModuleFuelRecursive(t *testing.T) {
+func TestGetModuleFuelRecursive(t *testing.T) {
 	var tests = []struct {
 		mass int64
 		fuel int64
@@ -53,7 +53,7 @@ func TestgetModuleFuelRecursive(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		fuel := getModuleFuelRecursive(test.mass, 0)
+		fuel := GetModuleFuelRecursive(test.mass, 0)
 		if fuel != test.fuel {
 			t.Errorf("test %d failed: expected %d, but got %d", i, test.fuel, fuel)
 		}

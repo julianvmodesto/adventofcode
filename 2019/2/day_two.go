@@ -7,7 +7,9 @@ type Intcode struct {
 	hasNext bool
 }
 
-func NewIntcode(program []int) *Intcode {
+func NewIntcode(input []int) *Intcode {
+	program := make([]int, len(input))
+	copy(program, input)
 	var hasNext = true
 
 	if len(program) == 0 {
@@ -33,7 +35,6 @@ func (i *Intcode) Operate(opcode, in1, in2, out int) {
 		value = i.program[in1] * i.program[in2]
 	case 99:
 		i.hasNext = false
-		log.Printf("finished program:\n%v\n", i.program)
 		return
 	default:
 		log.Printf("unknown opcode %d\n", opcode)
@@ -47,7 +48,6 @@ func (i *Intcode) Process() {
 	for i.hasNext {
 		if i.program[currentPosition] == 99 {
 			i.hasNext = false
-			log.Printf("finished program:\n%v\n", i.program)
 			break
 		}
 
@@ -77,4 +77,27 @@ func main() {
 	var i = NewIntcode(input)
 	i.Start()
 	i.Process()
+	log.Printf("finished program:\n%v\n", i.program)
+
+	var output = 19690720
+
+	var done = false
+	for n := 0; n < 100; n++ {
+		for v := 0; v < 100; v++ {
+			var p2 = NewIntcode(input)
+			p2.program[1] = n
+			p2.program[2] = v
+			p2.Process()
+
+			if output == p2.program[0] {
+				log.Printf("found noun '%d' and verb '%d', with solution %d", n, v, 100*n+v)
+				done = true
+				break
+			}
+		}
+
+		if done {
+			break
+		}
+	}
 }

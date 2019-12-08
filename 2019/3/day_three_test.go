@@ -53,8 +53,7 @@ func TestGetDistanceToClosestIntersection(t *testing.T) {
 		},
 	}
 	for i, test := range tests {
-		var wire1, wire2 = NewPanels(test.wire1, test.wire2)
-		var distance = wire1.GetDistanceToClosestIntersection(wire2)
+		var distance = GetDistanceToClosestIntersection(test.wire1, test.wire2)
 		if distance != test.distance {
 			t.Fatalf("failed test %d: expected distance %f, but got %f", i, test.distance, distance)
 		}

@@ -50,25 +50,25 @@ func main() {
 			switch key {
 			case "byr":
 				byr = true
-				byr2, err = regexp.Match(`^(19[2-9]\d)|(200[0-2])$`, []byte(value))
+				byr2, err = regexp.Match(`^19[2-9]\d|200[0-2]$`, []byte(value))
 				if err != nil {
 					log.Printf("error matching byr: %v\n", err)
 				}
 			case "iyr":
 				iyr = true
-				iyr2, err = regexp.Match(`^20((1\d)|(20))$`, []byte(value))
+				iyr2, err = regexp.Match(`^20(1\d|20)$`, []byte(value))
 				if err != nil {
 					log.Printf("error matching iyr: %v\n", err)
 				}
 			case "eyr":
 				eyr = true
-				eyr2, err = regexp.Match(`^20((2\d)|(30))$`, []byte(value))
+				eyr2, err = regexp.Match(`^20(2\d|30)$`, []byte(value))
 				if err != nil {
 					log.Printf("error matching eyr: %v\n", err)
 				}
 			case "hgt":
 				hgt = true
-				hgt2, err = regexp.Match(`^(1(([5-8]\d)|(9[0-3]))cm)|(((59)|(6\d)|(7[0-6]))in)$`, []byte(value))
+				hgt2, err = regexp.Match(`^1([5-8]\d|9[0-3])cm|(59|6\d|7[0-6])in$`, []byte(value))
 				if err != nil {
 					log.Printf("error matching hgt: %v\n", err)
 				}
@@ -80,7 +80,7 @@ func main() {
 				}
 			case "ecl":
 				ecl = true
-				ecl2, err = regexp.Match(`^(amb)|(blu)|(brn)|(gry)|(grn)|(hzl)|(oth)$`, []byte(value))
+				ecl2, err = regexp.Match(`^amb|blu|brn|gry|grn|hzl|oth$`, []byte(value))
 				if err != nil {
 					log.Printf("error matching ecl: %v\n", err)
 				}
